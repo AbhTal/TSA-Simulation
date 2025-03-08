@@ -4,8 +4,11 @@
 **Course:** CS_4632_W01  
 **Author:** Abhay Talele
 
-## Project Overview  
+(work in progress) Just a basic tsa simulation, more changes coming
+
+## Project Overview
 This project simulates the **TSA airport security checkpoint process** using **SimPy**, a Python-based discrete-event simulation library. The model is designed to analyze **queue times, TSA agent workload, and passenger flow efficiency** under different conditions.  
+
 
 ## Implementation Goals  
  Simulate passenger arrivals at TSA checkpoints.  
