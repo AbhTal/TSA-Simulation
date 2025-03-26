@@ -2,17 +2,19 @@ import simpy
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 # Simulation parameters
 SIM_TIME = 3600  # 1 hour in seconds
-ARRIVAL_RATE = 5  # Passengers arrive every ~5 seconds
+ARRIVAL_RATE = 5  # ex: Passengers arrive every ~5 seconds
 NUM_TSA_AGENTS = 3
-PRECHECK_PROBABILITY = 0.3  # 30% TSA PreCheck passengers
-SECONDARY_SCREEN_PROB = 0.1  # 10% of passengers require secondary screening
+PRECHECK_PROBABILITY = 0.3  # ex: 30% TSA PreCheck passengers
+SECONDARY_SCREEN_PROB = 0.1 # ex: 10% of passengers require secondary screening
 
 # Data collection
 passenger_data = []
-
+total_wait_time = 0  # Track total wait time
+total_passengers = 0  # Track total passengers
 
 class Passenger:
     def __init__(self, env, id, queue_system):
@@ -32,6 +34,7 @@ class TSAAgent:
         self.is_busy = False
 
     def process_passenger(self, passenger):
+        global total_wait_time, total_passengers
         self.is_busy = True
         start_time = self.env.now
         screening_time = random.uniform(5, 15) if passenger.is_precheck else random.uniform(10, 25)
@@ -42,6 +45,11 @@ class TSAAgent:
 
         end_time = self.env.now
         wait_time = start_time - passenger.arrival_time
+
+        # Update total wait time and count passengers
+        total_wait_time += wait_time
+        total_passengers += 1
+
         passenger_data.append(
             [passenger.id, passenger.arrival_time, start_time, end_time, wait_time, passenger.is_precheck,
              passenger.needs_secondary])
@@ -108,11 +116,17 @@ class Simulation:
         self.env.run(until=SIM_TIME)
 
         # Save data to CSV
+        now = datetime.now()
+        timestamp = now.strftime("%H-%M-%S")
         df = pd.DataFrame(passenger_data,
                           columns=["ID", "Arrival Time", "Screening Start", "Exit Time", "Wait Time", "PreCheck",
                                    "Secondary Screening"])
-        df.to_csv("simulation_results.csv", index=False)
+        df.to_csv(f"simulation_results{timestamp}.csv", index=False)
         print("Simulation data saved to simulation_results.csv")
+
+        # Compute and print the average wait time
+        avg_wait_time = total_wait_time / total_passengers if total_passengers > 0 else 0
+        print(f"\n📊 Average Wait Time for All Passengers: {avg_wait_time:.2f} seconds")
 
         # Call the visualization function
         self.visualize_data(df)
