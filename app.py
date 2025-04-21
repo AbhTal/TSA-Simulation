@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 # Simulation parameters
-SIM_TIME = 3600  # 1 hour in seconds
+SIM_TIME = 3600*3  # 1 hour in seconds
 ARRIVAL_RATE = 5  # ex: Passengers arrive every ~5 seconds
 NUM_TSA_AGENTS = 3
 PRECHECK_PROBABILITY = 0.3  # ex: 30% TSA PreCheck passengers
@@ -125,8 +125,11 @@ class Simulation:
         print("Simulation data saved to simulation_results.csv")
 
         # Compute and print the average wait time
-        avg_wait_time = total_wait_time / total_passengers if total_passengers > 0 else 0
-        print(f"\n📊 Average Wait Time for All Passengers: {avg_wait_time:.2f} seconds")
+        avg_wait_time = 0
+        if total_passengers > 0:
+            avg_wait_time = total_wait_time / total_passengers
+        print(f"\nAverage Wait Time for All Passengers: {avg_wait_time:.2f} seconds")
+        print(f"Average Wait Time for All Passengers: {avg_wait_time/60} minutes")
 
         # Call the visualization function
         self.visualize_data(df)
