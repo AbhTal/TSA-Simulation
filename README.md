@@ -28,4 +28,4 @@ This project simulates the **TSA airport security checkpoint process** using **S
 ### **Install Dependencies**  
 Ensure you have **Python 3.x** and install required libraries:  
 ```bash
-pip install simpy matplotlib pandas
+pip install simpy matplotlib pandas pytest
