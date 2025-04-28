@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 # Simulation parameters
-SIM_TIME = 3600*3  # 1 hour in seconds
+SIM_TIME = 3600*3  # 1 hour in seconds, 3600 sec = 1 hr
 ARRIVAL_RATE = 5  # ex: Passengers arrive every ~5 seconds
 NUM_TSA_AGENTS = 3
 PRECHECK_PROBABILITY = 0.3  # ex: 30% TSA PreCheck passengers
