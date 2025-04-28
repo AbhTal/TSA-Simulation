@@ -27,3 +27,6 @@ This project simulates the **TSA airport security checkpoint process** using **S
 Ensure you have **Python 3.x** and install required libraries:  
 ```bash
 pip install simpy matplotlib pandas pytest
+```
+### Running the Simulation
+Clone the repo to your favorite coding environment, then make sure the dependencies are installed. After that, just run the python file app.py and you should have the results of your simulation with graphs as well.
